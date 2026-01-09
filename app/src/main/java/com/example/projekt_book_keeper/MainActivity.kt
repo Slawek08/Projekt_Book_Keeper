@@ -78,7 +78,9 @@ class MainActivity : ComponentActivity() {
                         },
                         onFavoritesClick = {
                             navController.navigate(NavRoutes.FAVORITES)
-                        }
+                        },
+                        isRefreshing = false,
+                        onRefresh = { homeViewModel.loadBooks() }
                     )
                 }
 

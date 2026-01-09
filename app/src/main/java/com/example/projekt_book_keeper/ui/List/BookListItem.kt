@@ -9,6 +9,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.*
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,8 +26,9 @@ fun BookListItem(
     book: Book,
     isFavorite: Boolean,
     onClick: () -> Unit,
-    onFavoriteClick: () -> Unit
+    onFavoriteClick: () -> Unit,
 ) {
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -34,8 +36,7 @@ fun BookListItem(
             .padding(8.dp)
             .background(color = Color(0xAAFB8C00), shape = RoundedCornerShape(16.dp))
             .border(2.dp, Color(0xFF4E342E), shape = RoundedCornerShape(16.dp))
-            .padding(10.dp)
-            ,
+            .padding(10.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         AsyncImage(

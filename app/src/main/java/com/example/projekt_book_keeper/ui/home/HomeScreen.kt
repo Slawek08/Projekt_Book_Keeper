@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.*
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,7 +25,9 @@ import com.example.projekt_book_keeper.ui.List.BookListItem
 fun HomeScreen(
     viewModel: HomeViewModel,
     onBookClick: (Book) -> Unit,
-    onFavoritesClick: () -> Unit
+    onFavoritesClick: () -> Unit,
+    isRefreshing: Boolean,
+    onRefresh: () -> Unit
 ) {
     val state by viewModel.uiState.collectAsState()
 
@@ -98,17 +101,23 @@ fun HomeScreen(
                 }
 
                 else -> {
-                    LazyColumn(
-                        modifier = Modifier.fillMaxSize()
+                    PullToRefreshBox(
+                        isRefreshing = isRefreshing,
+                        onRefresh = onRefresh
                     ) {
-                        items(state.books) { book ->
-                            BookListItem(
-                                book = book,
-                                isFavorite = state.favoriteIds.contains(book.key),
-                                onClick = { onBookClick(book) },
-                                onFavoriteClick = { viewModel.toggleFavorite(book) }
-                            )
-                        }
+                        LazyColumn(
+                            modifier = Modifier.fillMaxSize()
+                        ) {
+                            items(state.books) { book ->
+                                BookListItem(
+                                    book = book,
+                                    isFavorite = state.favoriteIds.contains(book.key),
+                                    onClick = { onBookClick(book) },
+                                    onFavoriteClick = { viewModel.toggleFavorite(book) }
+                                )
+                            }
+                    }
+
                     }
                 }
             }
